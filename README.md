@@ -185,7 +185,7 @@ Please read [CONTRIBUTING.md](https://github.com/wisemapping/wisemapping-fronten
 ## Support
 
 - **Website**: [www.wisemapping.com](https://www.wisemapping.com)
-- **Documentation**: [wisemapping.atlassian.net](https://wisemapping.atlassian.net/wiki/spaces/WS/overview)
+
 - **Issues**: [GitHub Issues](https://github.com/wisemapping/wisemapping-desktop/issues)
 - **Community**: [WiseMapping Community](https://groups.google.com/g/wisemapping)
 

@@ -115,24 +115,26 @@ const ExportDialog = ({ isOpen, onClose, mindmap, designer }: ExportDialogProps)
                     throw new Error('Unsupported format');
             }
 
-            const contentUrl = await exporter.exportAndEncode();
-
-            // Convert Data URL to format suitable for Main process saving
-            // Main process expects content to write to file.
-            // For text formats (wxml, mm, etc), exportAndEncode returns a Blob URL or Data URL?
-            // Exporter.ts: return URL.createObjectURL(blob);
-
-            // We need to fetch the content from the blob URL to send it to main process
-            const response = await fetch(contentUrl);
-            const blob = await response.blob();
-
-            // Convert blob to ArrayBuffer
-            const buffer = await blob.arrayBuffer();
+            let content: Uint8Array;
+            if (['png', 'jpg', 'pdf'].includes(exportFormat)) {
+                const dataUri = await exporter.exportAndEncode();
+                const base64 = dataUri.split(',')[1];
+                const binaryString = window.atob(base64);
+                const len = binaryString.length;
+                const bytes = new Uint8Array(len);
+                for (let i = 0; i < len; i++) {
+                    bytes[i] = binaryString.charCodeAt(i);
+                }
+                content = bytes;
+            } else {
+                const textContent = await exporter.export();
+                content = new TextEncoder().encode(textContent);
+            }
 
             // Send to main process
             // We need an IPC handler 'dialog:save-file'
             const success = await window.electron.ipcRenderer.invoke('dialog:save-file', {
-                content: new Uint8Array(buffer),
+                content: content,
                 name: `mindmap.${exportFormat}`,
                 extension: exportFormat
             });
@@ -140,9 +142,6 @@ const ExportDialog = ({ isOpen, onClose, mindmap, designer }: ExportDialogProps)
             if (success) {
                 onClose();
             }
-
-            URL.revokeObjectURL(contentUrl);
-
         } catch (error) {
             console.error('Export failed:', error);
             alert('Export failed: ' + error);
