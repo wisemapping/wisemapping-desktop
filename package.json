@@ -1,0 +1,56 @@
+{
+    "name": "wisemapping-desktop",
+    "version": "0.5.0",
+    "description": "WiseMapping Desktop - Offline mind mapping application",
+    "author": "WiseMapping Team <team@wisemapping.com>",
+    "license": "SEE LICENSE IN LICENSE",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/wisemapping/wisemapping-desktop.git"
+    },
+    "main": "out/main/main.js",
+    "scripts": {
+        "deps": "./scripts/setup-local.sh",
+        "dev": "node ./scripts/clean-launch.js",
+        "dev-internal": "electron-vite dev",
+        "build": "electron-vite build",
+        "preview": "electron-vite preview",
+        "typecheck": "tsc --noEmit",
+        "lint": "eslint src --ext ts,tsx",
+        "lint:fix": "eslint src --ext ts,tsx --fix",
+        "dist": "electron-builder",
+        "dist:mac": "electron-builder --mac",
+        "dist:win": "electron-builder --win",
+        "dist:linux": "electron-builder --linux",
+        "clean": "rm -rf dist dist-electron node_modules"
+    },
+    "dependencies": {
+        "@emotion/react": "^11.14.0",
+        "@emotion/styled": "^11.14.1",
+        "@mui/icons-material": "^7.3.6",
+        "@mui/material": "^7.3.6",
+        "electron-store": "^8.2.0",
+        "react": "^19.2.1",
+        "react-dom": "^19.2.1",
+        "react-intl": "^8.0.3",
+        "uuid": "^9.0.1"
+    },
+    "devDependencies": {
+        "@types/node": "^20.11.5",
+        "@types/react": "^19.0.6",
+        "@types/react-dom": "^19.0.2",
+        "@types/uuid": "^9.0.7",
+        "@vitejs/plugin-react": "^5.1.2",
+        "cross-env": "^10.1.0",
+        "electron": "^39.2.7",
+        "electron-builder": "^24.13.3",
+        "electron-vite": "^5.0.0",
+        "eslint": "^9.39.1",
+        "typescript": "^5.2.2",
+        "vite": "^7.2.7"
+    },
+    "engines": {
+        "node": ">=20.0.0"
+    },
+    "packageManager": "yarn@1.22.22"
+}
