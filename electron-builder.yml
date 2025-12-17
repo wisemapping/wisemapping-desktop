@@ -34,6 +34,8 @@ win:
         - x64
   icon: resources/icon.ico
   artifactName: ${productName}-${version}-${arch}.${ext}
+portable:
+  artifactName: ${productName}-${version}-${arch}-portable.${ext}
 linux:
   target:
     - AppImage
