@@ -22,31 +22,22 @@ import type { MenuItemConstructorOptions, BrowserWindow as BrowserWindowType, Ip
 import { join } from 'path';
 import { FileManager } from './fileManager';
 
-console.log('Main process starting...');
-
 let mainWindow: BrowserWindowType | null = null;
 const fileManager = new FileManager();
 
 // App lifecycle
-if (!app) {
-    console.error('CRITICAL: app is undefined. We might not be running in Electron context.');
-} else {
-    app.setName('WiseMapping');
-    app.whenReady().then(() => {
-        if (process.platform === 'darwin') {
-            app.dock.setIcon(join(__dirname, '../../resources/mac-icon.png'));
-        }
-        setupIpcHandlers();
-        createMenu();
-        createWindow();
+app.setName('WiseMapping');
+app.whenReady().then(() => {
+    setupIpcHandlers();
+    createMenu();
+    createWindow();
 
-        app.on('activate', () => {
-            if (BrowserWindow.getAllWindows().length === 0) {
-                createWindow();
-            }
-        });
+    app.on('activate', () => {
+        if (BrowserWindow.getAllWindows().length === 0) {
+            createWindow();
+        }
     });
-}
+});
 
 // ... (omitted lines) ...
 
@@ -74,7 +65,8 @@ function createWindow(): void {
         mainWindow.loadURL('http://localhost:5173');
         mainWindow.webContents.openDevTools();
     } else {
-        mainWindow.loadFile(join(__dirname, '../renderer/index.html'));
+        const rendererPath = join(__dirname, '../renderer/index.html');
+        mainWindow.loadFile(rendererPath);
     }
 
     // Show window when ready

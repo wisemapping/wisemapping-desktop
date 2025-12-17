@@ -39,8 +39,9 @@ export class FileManager {
 
     private get storageDir(): string {
         if (!this._storageDir) {
-            const documentsPath = app.getPath('documents');
-            this._storageDir = join(documentsPath, 'WiseMapping');
+            // Use userData instead of documents to avoid macOS permission dialogs
+            // This resolves to ~/Library/Application Support/WiseMapping on macOS
+            this._storageDir = app.getPath('userData') as string;
         }
         return this._storageDir;
     }

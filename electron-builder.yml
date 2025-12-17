@@ -20,10 +20,9 @@ mac:
       arch:
         - universal
   icon: resources/icon.icns
-  hardenedRuntime: true
+  identity: null
+  hardenedRuntime: false
   gatekeeperAssess: false
-  entitlements: resources/entitlements.mac.plist
-  entitlementsInherit: resources/entitlements.mac.plist
 
 win:
   target:

@@ -22,16 +22,28 @@ const path = require('path');
 delete process.env.ELECTRON_RUN_AS_NODE;
 
 console.log('Launching electron-vite with clean environment...');
+console.log('NODE_ENV:', process.env.NODE_ENV || 'not set', '-> setting to: development');
 
 const npmCmd = process.platform === 'win32' ? 'yarn.cmd' : 'yarn';
 const args = ['run', 'dev-internal'];
 
+console.log('Running command:', npmCmd, args.join(' '));
+
 const child = spawn(npmCmd, args, {
     stdio: 'inherit',
-    env: process.env,
+    env: {
+        ...process.env,
+        NODE_ENV: 'development'
+    },
     shell: true
 });
 
+child.on('error', (err) => {
+    console.error('Failed to start child process:', err);
+    process.exit(1);
+});
+
 child.on('exit', (code) => {
+    console.log('Child process exited with code:', code);
     process.exit(code);
 });
