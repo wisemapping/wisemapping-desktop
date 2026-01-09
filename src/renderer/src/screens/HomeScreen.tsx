@@ -31,10 +31,12 @@ import {
     Search as SearchIcon,
     MoreVert as MoreVertIcon,
     Brightness4,
-    Brightness7
+    Brightness7,
+    ImportExport as ImportIcon
 } from '@mui/icons-material';
 
 import Logo from '../assets/logo.svg';
+import ImportDialog from '../components/ImportDialog';
 
 interface HomeScreenProps {
     onOpenMindmap: (id: string) => void;
@@ -49,6 +51,7 @@ function HomeScreen({ onOpenMindmap, isDarkMode, onToggleTheme }: HomeScreenProp
 
     // Modal states
     const [showCreateModal, setShowCreateModal] = useState(false);
+    const [showImportModal, setShowImportModal] = useState(false);
     const [newMapTitle, setNewMapTitle] = useState('New Mindmap');
     const [itemToDelete, setItemToDelete] = useState<{ id: string, title: string } | null>(null);
 
@@ -119,6 +122,11 @@ function HomeScreen({ onOpenMindmap, isDarkMode, onToggleTheme }: HomeScreenProp
         }
     };
 
+    const handleImportSuccess = async (id: string) => {
+        await loadMindmaps();
+        onOpenMindmap(id);
+    };
+
     const handleLogoClick = () => {
         window.electron.ipcRenderer.invoke('app:open-external', 'https://www.wisemapping.com');
     }
@@ -167,6 +175,19 @@ function HomeScreen({ onOpenMindmap, isDarkMode, onToggleTheme }: HomeScreenProp
                             {isDarkMode ? <Brightness7 /> : <Brightness4 />}
                         </IconButton>
                     </Tooltip>
+                    <Button
+                        variant="outlined"
+                        startIcon={<ImportIcon />}
+                        onClick={() => setShowImportModal(true)}
+                        sx={{
+                            color: 'text.primary',
+                            borderColor: 'divider',
+                            textTransform: 'none',
+                            borderRadius: 2,
+                        }}
+                    >
+                        Import
+                    </Button>
                     <Button
                         variant="contained"
                         startIcon={<AddIcon />}
@@ -274,6 +295,7 @@ function HomeScreen({ onOpenMindmap, isDarkMode, onToggleTheme }: HomeScreenProp
                                             size="small"
                                             onClick={(e) => handleDelete(map.id, e)}
                                             sx={{ color: 'text.secondary' }}
+                                            aria-label="Delete"
                                         >
                                             <MoreVertIcon />
                                         </IconButton>
@@ -362,6 +384,12 @@ function HomeScreen({ onOpenMindmap, isDarkMode, onToggleTheme }: HomeScreenProp
                     <Button onClick={confirmDelete} color="error" variant="contained">Delete</Button>
                 </DialogActions>
             </Dialog>
+
+            <ImportDialog
+                isOpen={showImportModal}
+                onClose={() => setShowImportModal(false)}
+                onImportSuccess={handleImportSuccess}
+            />
         </Box>
     );
 }

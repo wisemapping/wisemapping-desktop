@@ -22,7 +22,9 @@
         "dist:mac": "electron-builder --mac",
         "dist:win": "electron-builder --win",
         "dist:linux": "electron-builder --linux",
-        "clean": "rm -rf dist dist-electron node_modules"
+        "clean": "rm -rf dist dist-electron node_modules",
+        "test": "npx playwright test",
+        "test:ui": "npx playwright test --ui"
     },
     "dependencies": {
         "@emotion/react": "^11.14.0",
@@ -36,6 +38,7 @@
         "uuid": "^9.0.1"
     },
     "devDependencies": {
+        "@playwright/test": "^1.57.0",
         "@types/node": "^20.11.5",
         "@types/react": "^19.0.6",
         "@types/react-dom": "^19.0.2",

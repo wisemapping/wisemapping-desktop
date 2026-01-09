@@ -15,9 +15,7 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-// @ts-ignore
-const electron = require('electron');
-const { app, BrowserWindow, ipcMain, Menu, shell, dialog } = electron;
+import { app, BrowserWindow, ipcMain, Menu, shell, dialog } from 'electron';
 import type { MenuItemConstructorOptions, BrowserWindow as BrowserWindowType, IpcMainInvokeEvent } from 'electron';
 import { join } from 'path';
 import { FileManager } from './fileManager';
@@ -178,6 +176,10 @@ function setupIpcHandlers(): void {
 
     ipcMain.handle('mindmap:delete', async (_event: IpcMainInvokeEvent, id: string) => {
         return await fileManager.deleteMindmap(id);
+    });
+
+    ipcMain.handle('mindmap:import', async (_event: IpcMainInvokeEvent, title: string, xml: string) => {
+        return await fileManager.importMindmap(title, xml);
     });
 
     ipcMain.handle('mindmap:export', async (_event: IpcMainInvokeEvent, id: string, title?: string) => {

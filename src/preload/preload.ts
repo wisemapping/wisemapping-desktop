@@ -33,6 +33,7 @@ contextBridge.exposeInMainWorld('electron', {
                 'app:get-storage-path',
                 'app:open-external',
                 'dialog:save-file',
+                'mindmap:import',
             ];
 
             if (validChannels.includes(channel)) {

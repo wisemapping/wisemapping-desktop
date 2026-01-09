@@ -16,6 +16,7 @@
  *   limitations under the License.
  */
 import React, { useState } from 'react';
+import { IntlProvider } from 'react-intl';
 import HomeScreen from './screens/HomeScreen';
 import EditorScreen from './screens/EditorScreen';
 import { CircularProgress, Box, ThemeProvider, CssBaseline } from '@mui/material';
@@ -76,25 +77,27 @@ function App() {
     }
 
     return (
-        <ThemeProvider theme={theme}>
-            <CssBaseline />
-            <div className="app">
-                {state.screen === 'home' && (
-                    <HomeScreen
-                        onOpenMindmap={handleOpenMindmap}
-                        isDarkMode={mode === 'dark'}
-                        onToggleTheme={handleToggleTheme}
-                    />
-                )}
-                {state.screen === 'editor' && state.currentMindmapId && (
-                    <EditorScreen
-                        mindmapId={state.currentMindmapId}
-                        onBack={handleBackToHome}
-                        isDarkMode={mode === 'dark'}
-                    />
-                )}
-            </div>
-        </ThemeProvider>
+        <IntlProvider locale="en" defaultLocale="en">
+            <ThemeProvider theme={theme}>
+                <CssBaseline />
+                <div className="app">
+                    {state.screen === 'home' && (
+                        <HomeScreen
+                            onOpenMindmap={handleOpenMindmap}
+                            isDarkMode={mode === 'dark'}
+                            onToggleTheme={handleToggleTheme}
+                        />
+                    )}
+                    {state.screen === 'editor' && state.currentMindmapId && (
+                        <EditorScreen
+                            mindmapId={state.currentMindmapId}
+                            onBack={handleBackToHome}
+                            isDarkMode={mode === 'dark'}
+                        />
+                    )}
+                </div>
+            </ThemeProvider>
+        </IntlProvider>
     );
 }
 

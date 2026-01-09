@@ -140,6 +140,14 @@ export class FileManager {
         }
     }
 
+    async importMindmap(_title: string, xml: string): Promise<string> {
+        await this.initialize();
+        const id = uuidv4();
+        const filePath = join(this.mapsDir, `${id}.wxml`);
+        await fs.writeFile(filePath, xml, 'utf-8');
+        return id;
+    }
+
     async exportMindmap(id: string, targetPath: string): Promise<void> {
         const sourcePath = join(this.mapsDir, `${id}.wxml`);
         try {
