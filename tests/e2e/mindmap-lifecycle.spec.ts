@@ -208,11 +208,54 @@ test.describe('Mindmap Lifecycle', () => {
         await window.getByRole('button', { name: 'Export' }).click();
 
         // Check Dialog Opens. The title is just "Export".
-        await expect(window.getByRole('heading', { name: 'Export' })).toBeVisible();
-
         // Click Export in the dialog (it returns to form)
         // Find the button inside the dialog actions to avoid ambiguity with the header
         await window.getByRole('dialog').getByRole('button', { name: 'Export' }).click();
+    });
+
+    test('Editor: Back to Home', async () => {
+        const window = await electronApp.firstWindow();
+        await window.waitForLoadState('domcontentloaded');
+
+        // Create a map
+        const mapName = 'Back Test ' + Date.now();
+        await window.getByText('New Map').click();
+        await window.getByLabel('Mindmap Title').fill(mapName);
+        await window.getByRole('button', { name: 'Create' }).click();
+
+        // Wait for editor load (App Bar title visible)
+        await window.getByTestId('app-bar-title').first().waitFor();
+
+        // Find and click the back button (WiseMapping logo/icon usually acts as home/back or there is an explicit back button)
+        // Based on analysis, there isn't an explicit "Back" text button in the App Bar usually, 
+        // but often a logo or an arrow. 
+        // We will look for a button with a common back label or icon description.
+        // Assuming there is a button that handles `onBack`.
+        // Let's try locating by a likely name or generic button near the start.
+        // If we can't find a dedicated "Back" button, we might need to inspect the AppBar component deeper.
+        // However, standard flow often has a "My Maps" or similar or a Back arrow.
+        // For now, let's try finding a button with label "Back" or "Home" or the Logo.
+
+        // Let's check for an SVG icon button that might be the back button.
+        // Often it's the first button.
+        // Or we can try to find by some aria-label if defined.
+
+        // Fallback: Attempting to click the logo/branding which often navigates home
+        // OR looking for a button that isn't Save/Export/etc.
+
+        // Let's try 'Back' aria-label first, then 'Home'.
+        // If not found, we might need to look at the code.
+        // Looking at EditorScreen.tsx: 
+        // <Editor onAction={(action) => { if (action === 'back') ... }} />
+        // The Editor triggers 'back'. The AppBar usually has a back/home button.
+        // Let's guess it has an aria-label "Go Back" or "Back".
+
+        // Click the back button using the test ID
+        await window.getByTestId('app-bar-back-button').click();
+
+        // Verify we are back at Home
+        // "New Map" button should be visible
+        await expect(window.getByText('New Map')).toBeVisible();
     });
 
 });

@@ -40,3 +40,10 @@ resources/mac-icon.iconset/
 
 # Build logs
 build_log*.txt
+
+# Playwright
+test-results/
+playwright-report/
+blob-report/
+playwright/.cache/
+.last-run.json
