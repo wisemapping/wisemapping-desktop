@@ -193,7 +193,7 @@ Please read [CONTRIBUTING.md](https://github.com/wisemapping/wisemapping-fronten
 
 WiseMapping Desktop is licensed under the **WiseMapping Public License (WPL)**.
 
-The WiseMapping Public License is a modified version of the Apache License 2.0 that includes additional terms specific to the WiseMapping project. See the [LICENSE](LICENSE) file for the full license text.
+The WiseMapping Public License is a modified version of the Apache License 2.0 that includes additional terms specific to the WiseMapping project. See the [LICENSE](LICENSE.md) file for the full license text.
 
 ### Key Points
 
@@ -203,7 +203,7 @@ The WiseMapping Public License is a modified version of the Apache License 2.0 t
 - ⚠️ Must retain copyright notices
 - ⚠️ Must include license and notice files
 
-For the complete license terms, see [LICENSE](LICENSE) or visit [www.wisemapping.org/license](http://www.wisemapping.org/license).
+For the complete license terms, see [LICENSE](LICENSE.md) or visit [www.wisemapping.org/license](http://www.wisemapping.org/license).
 
 ## Authors
 
